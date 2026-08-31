@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Suji's Recipe Diary</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+    <main class="book-container">
+
+
+        <!-- =================================================
+             INSIDE OF THE COOKBOOK
+             ================================================= -->
+
+        <div class="book-pages">
+
+
+            <!-- =================================================
+                 LEFT PAGE
+                 ================================================= -->
+
+            <div class="book-page left-page">
+
+                <div class="page-decoration">
+                    ✿
+                </div>
+
+                <p class="page-small-title">
+                    welcome to
+                </p>
+
+                <h2>
+                    Suji's Kitchen
+                </h2>
+
+                <div class="page-strawberry">
+                    🍓
+                </div>
+
+                <p class="page-message">
+                    A little collection of recipes,
+                    experiments, favourites and
+                    delicious memories.
+                </p>
+
+
+                <!-- ADD DISH BUTTON -->
+
+                <button
+                    class="add-dish-btn"
+                    type="button"
+                >
+                    ＋ Add Dish
+                </button>
+
+
+                <div class="page-line"></div>
+
+                <p class="page-note">
+                    Made with love &amp; a little chaos ♡
+                </p>
+
+            </div>
+
+
+            <!-- =================================================
+                 RIGHT PAGE
+                 ================================================= -->
+
+            <div class="book-page right-page">
+
+
+                <!-- PAGE DECORATION -->
+
+                <div class="page-decoration">
+                    ♡
+                </div>
+
+
+                <!-- =================================================
+                     CONTENTS
+                     ================================================= -->
+
+                <div class="index-page">
+
+                    <p class="page-small-title">
+                        my cookbook
+                    </p>
+
+                    <h2>
+                        Contents ♡
+                    </h2>
+
+                    <p class="index-subtitle">
+                        A little list of everything I've cooked.
+                    </p>
+
+                    <!-- SEARCH RECIPES -->
+
+                    <div class="recipe-search"> 
+                        <input
+                            type="text"
+                            id="recipe-search"
+                            placeholder="Search recipes..."
+                            autocomplete="off"
+                        >
+                    </div>
+
+                    <div class="recipe-index-list"></div>
+
+                </div>
+
+
+                <!-- =================================================
+                     RECIPE DISPLAY
+                     ================================================= -->
+
+                <div
+                    class="recipe-display"
+                    style="display: none;"
+                ></div>
+
+
+                <!-- =================================================
+                     RECIPE NAVIGATION
+                     ================================================= -->
+
+                <div class="recipe-navigation">
+
+                    <button
+                        class="previous-recipe-btn"
+                        type="button"
+                    >
+                        ← Previous
+                    </button>
+
+
+                    <span class="recipe-page-number">
+                        Contents
+                    </span>
+
+
+                    <button
+                        class="next-recipe-btn"
+                        type="button"
+                    >
+                        Next →
+                    </button>
+
+                </div>
+
+
+                <!-- =================================================
+                     CLOSE COOKBOOK
+                     ================================================= -->
+
+                <button
+                    class="close-book-btn"
+                    type="button"
+                >
+                    Close Cookbook ♡
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             FRONT COVER
+             ================================================= -->
+
+        <div class="book-cover">
+
+            <div class="cover-decoration top">
+                ✿
+            </div>
+
+            <p class="little-text">
+                a collection of
+            </p>
+
+            <h1>
+                Suji's
+            </h1>
+
+            <h2>
+                Recipe Diary
+            </h2>
+
+            <div class="strawberry">
+                🍓
+            </div>
+
+            <p class="cover-subtitle">
+                little recipes &amp; sweet memories
+            </p>
+
+            <div class="cover-decoration bottom">
+                ♡
+            </div>
+
+
+            <!-- OPEN COOKBOOK -->
+
+            <button
+                class="open-book-btn"
+                type="button"
+            >
+                my cookbook ✨
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             ADD DISH SCREEN
+             ================================================= -->
+
+        <div class="add-dish-screen">
+
+
+            <!-- CLOSE -->
+
+            <button
+                class="close-add-dish"
+                type="button"
+                aria-label="Close add dish"
+            >
+                ×
+            </button>
+
+
+            <p class="page-small-title">
+                add to my diary
+            </p>
+
+            <h2>
+                Add a Dish ♡
+            </h2>
+
+
+            <!-- =================================================
+                 RECIPE FORM
+                 ================================================= -->
+
+            <form id="recipe-form">
+
+
+                <!-- DISH NAME -->
+
+                <label for="recipe-name">
+                    Dish name
+                </label>
+
+                <input
+                    type="text"
+                    id="recipe-name"
+                    placeholder="e.g. Butter Chicken"
+                    required
+                >
+
+
+                <!-- CATEGORY -->
+
+                <label for="recipe-category">
+                    Category
+                </label>
+
+                <select
+                    id="recipe-category"
+                    required
+                >
+
+                    <option value="">
+                        Choose a category
+                    </option>
+
+                    <option value="Breakfast">
+                        Breakfast
+                    </option>
+
+                    <option value="Lunch">
+                        Lunch
+                    </option>
+
+                    <option value="Dinner">
+                        Dinner
+                    </option>
+
+                    <option value="Dessert">
+                        Dessert
+                    </option>
+
+                    <option value="Snack">
+                        Snack
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+
+                <!-- RECIPE PHOTO -->
+
+                <label for="recipe-image">
+                    Recipe photo
+                </label>
+
+                <input
+                    type="file"
+                    id="recipe-image"
+                    accept="image/*"
+                >
+
+
+                <!-- INGREDIENTS -->
+
+                <label for="recipe-ingredients">
+                    Ingredients
+                </label>
+
+                <textarea
+                    id="recipe-ingredients"
+                    placeholder="One ingredient per line..."
+                    required
+                ></textarea>
+
+
+                <!-- INSTRUCTIONS -->
+
+                <label for="recipe-instructions">
+                    Instructions
+                </label>
+
+                <textarea
+                    id="recipe-instructions"
+                    placeholder="One step per line..."
+                    required
+                ></textarea>
+
+
+                <!-- SAVE -->
+
+                <button
+                    type="submit"
+                    class="save-recipe-btn"
+                >
+                    Save to my cookbook ♡
+                </button>
+
+            </form>
+
+        </div>
+
+    </main>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>

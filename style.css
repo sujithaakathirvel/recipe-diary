@@ -1,0 +1,1733 @@
+/* =====================================================
+   SUJI'S RECIPE DIARY
+   FINAL COOKBOOK STYLING
+   ===================================================== */
+
+
+/* =====================================================
+   RESET
+   ===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =====================================================
+   BODY
+   ===================================================== */
+
+body {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #f8eee8;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    color: #76535a;
+
+    overflow: hidden;
+}
+
+
+/* =====================================================
+   BOOK CONTAINER
+   ===================================================== */
+
+.book-container {
+    position: relative;
+
+    width: 90%;
+    max-width: 900px;
+
+    height: 620px;
+
+    perspective: 1500px;
+}
+
+
+/* =====================================================
+   BOOK PAGES
+   ===================================================== */
+
+.book-pages {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    background: #fffaf1;
+
+    border-radius: 10px 20px 20px 10px;
+
+    box-shadow:
+        8px 10px 20px rgba(90, 50, 50, 0.12);
+
+    overflow: hidden;
+}
+
+/* =====================================================
+   BOOK LAYERING
+   ===================================================== */
+
+.book-pages {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+/* =====================================================
+   INDIVIDUAL PAGE
+   ===================================================== */
+
+.book-page {
+    position: relative;
+
+    width: 50%;
+    height: 100%;
+
+    padding: 48px 42px 85px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+
+    background: #fffaf1;
+
+    color: #76535a;
+
+    overflow: hidden;
+}
+
+
+/* =====================================================
+   LEFT PAGE
+   ===================================================== */
+
+.left-page {
+    border-radius: 10px 0 0 10px;
+
+    box-shadow:
+        inset -18px 0 22px rgba(120, 80, 70, 0.09);
+}
+
+
+/* =====================================================
+   RIGHT PAGE
+   ===================================================== */
+
+.right-page {
+    border-radius: 0 20px 20px 0;
+
+    box-shadow:
+        inset 18px 0 22px rgba(120, 80, 70, 0.09);
+
+    overflow: hidden;
+}
+
+
+/* =====================================================
+   BOOK SPINE
+   ===================================================== */
+
+.book-pages::after {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+    left: 50%;
+
+    width: 20px;
+
+    transform: translateX(-50%);
+
+    background:
+        linear-gradient(
+            to right,
+            rgba(120, 80, 70, 0.03),
+            rgba(120, 80, 70, 0.15),
+            rgba(255, 255, 255, 0.7),
+            rgba(120, 80, 70, 0.13),
+            rgba(120, 80, 70, 0.03)
+        );
+
+    box-shadow:
+        inset 2px 0 5px rgba(120, 80, 70, 0.08),
+        inset -2px 0 5px rgba(120, 80, 70, 0.08);
+
+    z-index: 5;
+
+    pointer-events: none;
+}
+
+
+/* =====================================================
+   PAGE TEXT
+   ===================================================== */
+
+.page-small-title {
+    margin-bottom: 8px;
+
+    font-size: 14px;
+
+    letter-spacing: 4px;
+
+    text-transform: uppercase;
+
+    color: #c38392;
+}
+
+
+.book-page h2 {
+    margin: 0;
+
+    font-size: 32px;
+
+    font-weight: normal;
+
+    line-height: 1.25;
+
+    color: #9d6474;
+}
+
+
+.page-message {
+    max-width: 260px;
+
+    margin-top: 22px;
+
+    font-size: 16px;
+
+    line-height: 1.8;
+}
+
+
+.page-note {
+    margin-top: 24px;
+
+    font-size: 14px;
+
+    font-style: italic;
+
+    line-height: 1.5;
+
+    color: #b47a87;
+}
+
+
+/* =====================================================
+   PAGE DECORATIONS
+   ===================================================== */
+
+.page-decoration {
+    position: absolute;
+
+    top: 22px;
+
+    font-size: 30px;
+
+    color: #d89aaa;
+}
+
+
+.left-page .page-decoration {
+    left: 25px;
+}
+
+
+.right-page .page-decoration {
+    right: 25px;
+}
+
+
+/* =====================================================
+   STRAWBERRY
+   ===================================================== */
+
+.page-strawberry {
+    margin-top: 22px;
+
+    font-size: 50px;
+
+    filter:
+        drop-shadow(
+            2px 4px 3px rgba(80, 40, 40, 0.12)
+        );
+}
+
+
+/* =====================================================
+   DECORATIVE LINE
+   ===================================================== */
+
+.page-line {
+    width: 80px;
+
+    height: 1px;
+
+    margin-top: 25px;
+
+    background: #d9a6ad;
+}
+
+
+/* =====================================================
+   ADD DISH BUTTON
+   ===================================================== */
+
+.add-dish-btn {
+    margin-top: 28px;
+
+    padding: 12px 22px;
+
+    border: 1px solid #d99aaa;
+
+    border-radius: 30px;
+
+    background: #fdf3ee;
+
+    color: #ad6878;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.add-dish-btn:hover {
+    background: #f7e1e5;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 10px rgba(100, 50, 60, 0.08);
+}
+
+
+/* =====================================================
+   =====================================================
+   CONTENTS PAGE
+   =====================================================
+   ===================================================== */
+
+.index-page {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    text-align: center;
+}
+
+
+/* =====================================================
+   CONTENTS TITLE
+   ===================================================== */
+
+.index-page .page-small-title {
+    margin-top: 2px;
+
+    margin-bottom: 5px;
+
+    font-size: 14px;
+
+    letter-spacing: 4px;
+}
+
+
+.index-page h2 {
+    font-size: 34px;
+
+    line-height: 1.1;
+}
+
+
+.index-subtitle {
+    width: 230px;
+
+    margin-top: 12px;
+
+    font-size: 15px;
+
+    line-height: 1.5;
+
+    color: #8b6269;
+}
+
+/* =====================================================
+   RECIPE SEARCH
+   ===================================================== */
+
+.recipe-search {
+    width: 100%;
+
+    margin-top: 15px;
+
+    display: flex;
+
+    justify-content: center;
+}
+
+
+#recipe-search {
+    width: 85%;
+
+    max-width: 300px;
+
+    padding: 9px 15px;
+
+    border: 1px solid #dfb8bf;
+
+    border-radius: 25px;
+
+    outline: none;
+
+    background: #fffdf9;
+
+    color: #76535a;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 13px;
+
+    text-align: center;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+#recipe-search::placeholder {
+    color: #c38392;
+}
+
+
+#recipe-search:focus {
+    border-color: #c38392;
+
+    box-shadow:
+        0 0 0 3px rgba(195, 131, 146, 0.12);
+}
+
+
+/* =====================================================
+   CONTENTS RECIPE LIST
+   ===================================================== */
+
+.recipe-index-list {
+    width: 100%;
+
+    flex: 1;
+
+    min-height: 0;
+
+    margin-top: 22px;
+
+    padding: 0 5px 15px;
+
+    overflow-y: auto;
+
+    overflow-x: hidden;
+
+    scrollbar-width: thin;
+
+    scrollbar-color: #d9a6ad transparent;
+}
+
+
+/* =====================================================
+   EACH CONTENTS ENTRY
+   ===================================================== */
+
+.recipe-index-item {
+    width: 100%;
+
+    min-height: 58px;
+
+    margin-bottom: 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    border-bottom: 1px solid #ead4d2;
+
+    padding-bottom: 9px;
+}
+
+
+/* =====================================================
+   RECIPE OPEN BUTTON
+   ===================================================== */
+
+.recipe-index-open {
+    flex: 1;
+
+    min-width: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 8px 10px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #76535a;
+
+    font-family: inherit;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    border-radius: 8px;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.recipe-index-open:hover {
+    background: #f9e9e9;
+
+    transform: translateX(3px);
+}
+
+
+/* =====================================================
+   RECIPE NUMBER
+   ===================================================== */
+
+.recipe-number {
+    flex-shrink: 0;
+
+    width: 34px;
+
+    font-size: 14px;
+
+    letter-spacing: 1px;
+
+    color: #c38392;
+}
+
+
+/* =====================================================
+   RECIPE INDEX INFO
+   ===================================================== */
+
+.recipe-index-info {
+    min-width: 0;
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+.recipe-index-info strong {
+    display: block;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+
+    font-size: 16px;
+
+    font-weight: normal;
+
+    color: #9d6474;
+}
+
+
+.recipe-index-info small {
+    font-size: 11px;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+
+    color: #c38392;
+}
+
+
+/* =====================================================
+   CONTENTS ARROW
+   ===================================================== */
+
+.recipe-arrow {
+    flex-shrink: 0;
+
+    font-size: 18px;
+
+    color: #c38392;
+}
+
+
+/* =====================================================
+   DELETE BUTTON
+   ===================================================== */
+
+.delete-recipe-btn {
+    flex-shrink: 0;
+
+    width: 30px;
+
+    height: 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 1px solid #e0b7bd;
+
+    border-radius: 50%;
+
+    background: transparent;
+
+    color: #c38392;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.delete-recipe-btn:hover {
+    background: #f7e1e5;
+
+    color: #a56575;
+
+    transform: scale(1.08);
+}
+
+
+/* =====================================================
+   EMPTY CONTENTS
+   ===================================================== */
+
+.empty-index {
+    padding-top: 35px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 12px;
+
+    color: #b47a87;
+}
+
+
+.empty-index span {
+    font-size: 35px;
+}
+
+
+.empty-index p {
+    max-width: 210px;
+
+    font-size: 15px;
+
+    font-style: italic;
+
+    line-height: 1.6;
+}
+
+
+/* =====================================================
+   =====================================================
+   RECIPE DISPLAY
+   =====================================================
+   ===================================================== */
+
+.recipe-display {
+    width: 100%;
+
+    flex: 1;
+
+    min-height: 0;
+
+    margin-top: 10px;
+
+    padding: 0 8px 25px;
+
+    overflow-y: auto;
+
+    overflow-x: hidden;
+
+    scrollbar-width: thin;
+
+    scrollbar-color: #d9a6ad transparent;
+
+    text-align: center;
+}
+
+
+/* =====================================================
+   RECIPE CATEGORY
+   ===================================================== */
+
+.recipe-category {
+    display: inline-block;
+
+    margin-top: 2px;
+
+    padding: 5px 13px;
+
+    border-radius: 20px;
+
+    background: #f7e1e5;
+
+    color: #b56d7e;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+
+/* =====================================================
+   RECIPE TITLE
+   ===================================================== */
+
+.recipe-title {
+    margin-top: 10px;
+
+    margin-bottom: 12px;
+
+    font-size: 30px;
+
+    font-weight: normal;
+
+    line-height: 1.2;
+
+    color: #9d6474;
+}
+
+
+/* =====================================================
+   RECIPE IMAGE
+   ===================================================== */
+
+.recipe-image {
+    display: block;
+
+    width: 100%;
+
+    max-width: 260px;
+
+    height: 145px;
+
+    margin: 10px auto 12px;
+
+    object-fit: cover;
+
+    border: 3px solid #f1d0d6;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 5px 14px rgba(90, 50, 50, 0.10);
+}
+
+
+/* =====================================================
+   RECIPE DIVIDER
+   ===================================================== */
+
+.recipe-divider {
+    width: 70px;
+
+    height: 1px;
+
+    margin: 12px auto 17px;
+
+    background: #d9a6ad;
+}
+
+
+/* =====================================================
+   RECIPE HEADINGS
+   ===================================================== */
+
+.recipe-display h4 {
+    margin-top: 17px;
+
+    margin-bottom: 9px;
+
+    font-size: 18px;
+
+    font-style: italic;
+
+    font-weight: normal;
+
+    color: #a56575;
+}
+
+
+/* =====================================================
+   INGREDIENTS
+   ===================================================== */
+
+.recipe-ingredients {
+    width: 92%;
+
+    margin: 0 auto;
+
+    padding-left: 24px;
+
+    text-align: left;
+
+    font-size: 15px;
+
+    line-height: 1.65;
+}
+
+
+.recipe-ingredients li {
+    margin-bottom: 4px;
+
+    padding-left: 3px;
+}
+
+
+/* =====================================================
+   INSTRUCTIONS
+   ===================================================== */
+
+.recipe-instructions {
+    width: 92%;
+
+    margin: 0 auto;
+
+    padding-left: 25px;
+
+    text-align: left;
+
+    font-size: 15px;
+
+    line-height: 1.7;
+}
+
+
+.recipe-instructions li {
+    margin-bottom: 8px;
+
+    padding-left: 4px;
+}
+
+
+/* =====================================================
+   EMPTY RECIPE
+   ===================================================== */
+
+.empty-recipes {
+    margin-top: 35px;
+
+    font-size: 16px;
+
+    font-style: italic;
+
+    color: #b47a87;
+}
+
+
+/* =====================================================
+   RECIPE END ACTIONS
+   ===================================================== */
+
+.recipe-actions {
+    position: static;
+
+    width: 100%;
+
+    margin-top: 80px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+/* =====================================================
+   EDIT + DELETE BUTTONS
+   ===================================================== */
+
+.edit-recipe-btn,
+.delete-current-recipe-btn {
+    padding: 8px 15px;
+
+    border: 1px solid #d9a6ad;
+
+    border-radius: 20px;
+
+    background: transparent;
+
+    color: #ad6878;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.edit-recipe-btn:hover,
+.delete-current-recipe-btn:hover {
+    background: #f7e1e5;
+
+    transform: translateY(-1px);
+}
+
+
+/* =====================================================
+   CLOSE COOKBOOK — RECIPE SCROLL
+   ===================================================== */
+
+.recipe-close-wrapper {
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    margin-top: 18px;
+
+    margin-bottom: 25px;
+}
+
+
+.recipe-close-book-btn {
+    padding: 8px 18px;
+
+    border: 1px solid #d9a6ad;
+
+    border-radius: 20px;
+
+    background: transparent;
+
+    color: #ad6878;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.recipe-close-book-btn:hover {
+    background: #f7e1e5;
+
+    transform: translateY(-1px);
+}
+
+
+/* =====================================================
+   RECIPE NAVIGATION
+   ===================================================== */
+
+.recipe-navigation {
+    position: absolute;
+
+    bottom: 20px;
+
+    left: 50%;
+
+    width: calc(100% - 60px);
+
+    transform: translateX(-50%);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding-top: 10px;
+
+    border: none;
+
+    background: transparent;
+
+    z-index: 20;
+}
+
+
+.recipe-navigation button {
+    padding: 8px 15px;
+
+    border: 1px solid #d9a6ad;
+
+    border-radius: 20px;
+
+    background: transparent;
+
+    color: #ad6878;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.recipe-navigation button:hover:not(:disabled) {
+    background: #f7e1e5;
+
+    transform: translateY(-1px);
+}
+
+
+.recipe-navigation button:disabled {
+    opacity: 0.3;
+
+    cursor: not-allowed;
+}
+
+
+.recipe-page-number {
+    padding: 4px 10px;
+
+    font-size: 14px;
+
+    color: #b47a87;
+
+    white-space: nowrap;
+}
+
+
+/* =====================================================
+   CLOSE COOKBOOK — INDEX PAGE
+   ===================================================== */
+
+.close-book-btn {
+    position: absolute;
+
+    bottom: 75px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    margin: 0;
+
+    padding: 8px 18px;
+
+    border: 1px solid #d9a6ad;
+
+    border-radius: 20px;
+
+    background: #fffaf1;
+
+    color: #ad6878;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+
+    z-index: 20;
+}
+
+
+.close-book-btn:hover {
+    background: #f7e1e5;
+
+    transform: translateX(-50%) translateY(-1px);
+}
+
+
+/* =====================================================
+   IMPORTANT — KEEP CLOSE BUTTON OFF THE COVER
+   ===================================================== */
+
+.book-cover {
+    position: absolute;
+
+    inset: 0;
+
+    padding: 55px 35px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    background: #e9a9b8;
+
+    border: 8px solid #d8899d;
+
+    border-radius: 8px 18px 18px 8px;
+
+    box-shadow:
+        12px 12px 0 #d8b6a9,
+        18px 18px 25px rgba(90, 50, 50, 0.18);
+
+    overflow: hidden;
+
+    transform-origin: left center;
+
+    transition:
+        transform 1s ease;
+
+    backface-visibility: hidden;
+
+    -webkit-backface-visibility: hidden;
+
+    z-index: 10;
+}
+
+
+/* =====================================================
+   =====================================================
+   FRONT COVER
+   =====================================================
+   ===================================================== */
+
+.book-cover {
+    position: absolute;
+
+    inset: 0;
+
+    padding: 55px 35px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    background: #e9a9b8;
+
+    border: 8px solid #d8899d;
+
+    border-radius: 8px 18px 18px 8px;
+
+    box-shadow:
+        12px 12px 0 #d8b6a9,
+        18px 18px 25px rgba(90, 50, 50, 0.18);
+
+    overflow: hidden;
+
+    transform-origin: left center;
+
+    transition:
+        transform 1s ease;
+
+    backface-visibility: hidden;
+
+    -webkit-backface-visibility: hidden;
+
+    z-index: 10;
+}
+
+
+/* =====================================================
+   OPEN COVER
+   ===================================================== */
+
+.book-cover.open {
+    transform: rotateY(-160deg);
+}
+
+
+/* =====================================================
+   COVER DECORATIONS
+   ===================================================== */
+
+.cover-decoration {
+    position: absolute;
+
+    font-size: 42px;
+
+    color: #fff5f5;
+}
+
+
+.cover-decoration.top {
+    top: 25px;
+
+    left: 30px;
+}
+
+
+.cover-decoration.bottom {
+    bottom: 25px;
+
+    right: 30px;
+}
+
+
+/* =====================================================
+   COVER TEXT
+   ===================================================== */
+
+.little-text {
+    margin-bottom: 10px;
+
+    font-size: 17px;
+
+    letter-spacing: 3px;
+
+    color: #fff7f5;
+}
+
+
+.book-cover h1 {
+    font-size: 58px;
+
+    font-weight: normal;
+
+    line-height: 1;
+
+    color: #fffaf8;
+}
+
+
+.book-cover h2 {
+    margin-top: 8px;
+
+    font-size: 36px;
+
+    font-weight: normal;
+
+    color: #fffaf8;
+}
+
+
+.cover-subtitle {
+    max-width: 280px;
+
+    margin-top: 18px;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+
+    letter-spacing: 1px;
+
+    color: #fff7f5;
+}
+
+
+/* =====================================================
+   COVER STRAWBERRY
+   ===================================================== */
+
+.strawberry {
+    margin-top: 25px;
+
+    font-size: 55px;
+
+    filter:
+        drop-shadow(
+            2px 4px 3px rgba(80, 40, 40, 0.15)
+        );
+}
+
+
+/* =====================================================
+   OPEN BOOK BUTTON
+   ===================================================== */
+
+.open-book-btn {
+    margin-top: 35px;
+
+    padding: 13px 24px;
+
+    border: 2px solid #fff4f2;
+
+    border-radius: 30px;
+
+    background: #fff4f2;
+
+    color: #b56d7e;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.open-book-btn:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 6px 12px rgba(80, 40, 40, 0.15);
+}
+
+
+/* =====================================================
+   =====================================================
+   ADD DISH SCREEN
+   =====================================================
+   ===================================================== */
+
+.add-dish-screen {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 30;
+
+    display: none;
+
+    padding: 40px;
+
+    background: #fffaf1;
+
+    border-radius: 15px;
+
+    overflow-y: auto;
+}
+
+
+/* =====================================================
+   CLOSE ADD DISH
+   ===================================================== */
+
+.close-add-dish {
+    position: absolute;
+
+    top: 18px;
+
+    right: 22px;
+
+    width: 35px;
+
+    height: 35px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #f7e1e5;
+
+    color: #a56575;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 24px;
+
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   ADD DISH FORM
+   ===================================================== */
+
+#recipe-form {
+    width: 100%;
+
+    max-width: 520px;
+
+    margin: 25px auto 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+    text-align: left;
+}
+
+
+#recipe-form label {
+    margin-top: 8px;
+
+    font-size: 14px;
+
+    color: #9d6474;
+}
+
+
+#recipe-form input,
+#recipe-form select,
+#recipe-form textarea {
+    width: 100%;
+
+    padding: 11px 13px;
+
+    border: 1px solid #dfb8bf;
+
+    border-radius: 8px;
+
+    outline: none;
+
+    background: #fffdf9;
+
+    color: #76535a;
+
+    font-family: inherit;
+
+    font-size: 14px;
+}
+
+
+#recipe-form input:focus,
+#recipe-form select:focus,
+#recipe-form textarea:focus {
+    border-color: #c38392;
+
+    box-shadow:
+        0 0 0 3px rgba(195, 131, 146, 0.12);
+}
+
+
+#recipe-form textarea {
+    min-height: 100px;
+
+    resize: vertical;
+
+    line-height: 1.5;
+}
+
+
+/* =====================================================
+   SAVE BUTTON
+   ===================================================== */
+
+.save-recipe-btn {
+    margin-top: 18px;
+
+    padding: 13px 20px;
+
+    border: none;
+
+    border-radius: 25px;
+
+    background: #d98fa1;
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.save-recipe-btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 12px rgba(100, 50, 60, 0.15);
+}
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 700px) {
+
+    body {
+        padding: 15px;
+
+        align-items: center;
+
+        overflow: auto;
+    }
+
+
+    .book-container {
+        width: 96%;
+
+        height: 560px;
+    }
+
+
+    .book-page {
+        padding: 42px 20px 80px;
+    }
+
+
+    .book-page h2 {
+        font-size: 25px;
+    }
+
+
+    .page-message {
+        max-width: 170px;
+
+        font-size: 13px;
+    }
+
+
+    .page-strawberry {
+        font-size: 42px;
+    }
+
+
+    /* CONTENTS */
+
+    .index-page h2 {
+        font-size: 27px;
+    }
+
+
+    .index-subtitle {
+        width: 180px;
+
+        font-size: 12px;
+    }
+
+
+    .recipe-index-list {
+        margin-top: 15px;
+    }
+
+
+    .recipe-index-item {
+        min-height: 52px;
+
+        margin-bottom: 7px;
+    }
+
+
+    .recipe-index-open {
+        gap: 7px;
+
+        padding: 6px;
+    }
+
+
+    .recipe-number {
+        width: 27px;
+
+        font-size: 11px;
+    }
+
+
+    .recipe-index-info strong {
+        font-size: 13px;
+    }
+
+
+    .recipe-index-info small {
+        font-size: 9px;
+    }
+
+
+    .delete-recipe-btn {
+        width: 25px;
+
+        height: 25px;
+
+        font-size: 12px;
+    }
+
+
+    /* RECIPE */
+
+    .recipe-title {
+        font-size: 24px;
+    }
+
+
+    .recipe-image {
+        max-width: 190px;
+
+        height: 110px;
+    }
+
+
+    .recipe-ingredients,
+    .recipe-instructions {
+        width: 100%;
+
+        font-size: 13px;
+
+        line-height: 1.55;
+    }
+
+
+    .recipe-display h4 {
+        font-size: 16px;
+    }
+
+
+    /* RECIPE ACTIONS */
+
+    .recipe-actions {
+        margin-top: 50px;
+
+        gap: 8px;
+    }
+
+
+    .edit-recipe-btn,
+    .delete-current-recipe-btn {
+        padding: 7px 12px;
+
+        font-size: 12px;
+    }
+
+
+    .recipe-close-wrapper {
+        margin-top: 14px;
+
+        margin-bottom: 15px;
+    }
+
+
+    .recipe-close-book-btn {
+        padding: 7px 15px;
+
+        font-size: 12px;
+    }
+
+
+    /* NAVIGATION */
+
+    .recipe-navigation {
+        width: calc(100% - 30px);
+
+        bottom: 12px;
+    }
+
+
+    .recipe-navigation button {
+        padding: 7px 10px;
+
+        font-size: 11px;
+    }
+
+
+    .recipe-page-number {
+        font-size: 11px;
+    }
+
+
+    /* COVER */
+
+    .book-cover h1 {
+        font-size: 50px;
+    }
+
+
+    .book-cover h2 {
+        font-size: 31px;
+    }
+
+
+    .little-text {
+        font-size: 14px;
+    }
+
+
+    .cover-subtitle {
+        font-size: 13px;
+    }
+
+
+    /* ADD DISH */
+
+    .add-dish-screen {
+        padding: 35px 25px;
+    }
+
+}
