@@ -1,3 +1,6 @@
+const API_URL =
+    "https://qu0fkg2jii.execute-api.eu-west-2.amazonaws.com";
+
 const openBookButton =
     document.querySelector(".open-book-btn");
 
@@ -37,11 +40,6 @@ const recipePageNumber =
 const indexPage =
     document.querySelector(".index-page");
 
-
-// =====================================================
-// FORM ELEMENTS
-// =====================================================
-
 const recipeNameInput =
     document.querySelector("#recipe-name");
 
@@ -60,39 +58,47 @@ const recipeInstructionsInput =
 const saveRecipeButton =
     document.querySelector(".save-recipe-btn");
 
-
-// =====================================================
-// RECIPE DATA
-// =====================================================
-
-let recipes =
-    JSON.parse(
-        localStorage.getItem("sujiRecipes")
-    ) || [];
-
-
-// =====================================================
-// CURRENT PAGE
-// =====================================================
-
-// -1 = Contents
-//  0 = first recipe
-//  1 = second recipe
-//  etc.
+let recipes = [];
 
 let currentRecipeIndex = -1;
-
-
-// =====================================================
-// EDIT MODE
-// =====================================================
 
 let editingRecipeIndex = null;
 
 
-// =====================================================
-// OPEN BOOK
-// =====================================================
+async function loadRecipes() {
+
+    try {
+
+        const response =
+            await fetch(`${API_URL}/recipes`);
+
+        if (!response.ok) {
+            throw new Error("Failed to load recipes");
+        }
+
+        const data =
+            await response.json();
+
+        recipes =
+            data.recipes || [];
+
+        showContents();
+
+    } catch (error) {
+
+        console.error(
+            "Failed to load recipes:",
+            error
+        );
+
+        recipes = [];
+
+        showContents();
+
+    }
+
+}
+
 
 openBookButton.addEventListener("click", function () {
 
@@ -103,20 +109,12 @@ openBookButton.addEventListener("click", function () {
 });
 
 
-// =====================================================
-// CLOSE BOOK — CONTENTS PAGE
-// =====================================================
-
 closeBookButton.addEventListener("click", function () {
 
     bookCover.classList.remove("open");
 
 });
 
-
-// =====================================================
-// ADD DISH
-// =====================================================
 
 addDishButton.addEventListener("click", function () {
 
@@ -129,10 +127,6 @@ addDishButton.addEventListener("click", function () {
 });
 
 
-// =====================================================
-// CLOSE ADD DISH
-// =====================================================
-
 closeAddDishButton.addEventListener("click", function () {
 
     addDishScreen.style.display = "none";
@@ -144,10 +138,6 @@ closeAddDishButton.addEventListener("click", function () {
 });
 
 
-// =====================================================
-// PREPARE FORM FOR NEW RECIPE
-// =====================================================
-
 function prepareFormForNewRecipe() {
 
     recipeForm.reset();
@@ -158,10 +148,6 @@ function prepareFormForNewRecipe() {
 }
 
 
-// =====================================================
-// EDIT RECIPE
-// =====================================================
-
 function editRecipe(index) {
 
     const recipe =
@@ -171,36 +157,24 @@ function editRecipe(index) {
         return;
     }
 
-
     editingRecipeIndex = index;
-
-
-    // Fill the form
 
     recipeNameInput.value =
         recipe.title || "";
 
-
     recipeCategoryInput.value =
         recipe.category || "";
-
 
     recipeIngredientsInput.value =
         (recipe.ingredients || []).join("\n");
 
-
     recipeInstructionsInput.value =
         (recipe.instructions || []).join("\n");
 
-
-
-
     recipeImageInput.value = "";
-
 
     saveRecipeButton.textContent =
         "Update my recipe ♡";
-
 
     addDishScreen.style.display =
         "block";
@@ -208,49 +182,74 @@ function editRecipe(index) {
 }
 
 
-// =====================================================
-// SAVE / UPDATE RECIPE
-// =====================================================
+async function uploadImage(recipeId, imageFile) {
 
-recipeForm.addEventListener("submit", function (event) {
+    const uploadResponse =
+        await fetch(
+            `${API_URL}/recipes/${recipeId}/image-upload`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    contentType: imageFile.type
+                })
+            }
+        );
+
+    if (!uploadResponse.ok) {
+        throw new Error("Failed to get image upload URL");
+    }
+
+    const uploadData =
+        await uploadResponse.json();
+
+    const s3Response =
+        await fetch(
+            uploadData.uploadUrl,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": imageFile.type
+                },
+                body: imageFile
+            }
+        );
+
+    if (!s3Response.ok) {
+        throw new Error("Failed to upload image to S3");
+    }
+
+    return uploadData.imageKey;
+
+}
+
+
+recipeForm.addEventListener("submit", async function (event) {
 
     event.preventDefault();
-
-
-    // =================================================
-    // GET FORM VALUES
-    // =================================================
 
     const name =
         recipeNameInput.value.trim();
 
-
     const category =
         recipeCategoryInput.value;
-
 
     const ingredientsText =
         recipeIngredientsInput.value.trim();
 
-
     const instructionsText =
         recipeInstructionsInput.value.trim();
 
-
     const imageFile =
         recipeImageInput.files[0];
-
-
-    // =================================================
-    // TURN TEXT INTO ARRAYS
-    // =================================================
 
     const ingredients =
         ingredientsText
             .split("\n")
             .map(item => item.trim())
             .filter(item => item !== "");
-
 
     const instructions =
         instructionsText
@@ -259,85 +258,70 @@ recipeForm.addEventListener("submit", function (event) {
             .filter(item => item !== "");
 
 
-    // =================================================
-    // EDITING EXISTING RECIPE
-    // =================================================
-
     if (editingRecipeIndex !== null) {
 
         const oldRecipe =
             recipes[editingRecipeIndex];
 
+        try {
 
-        const updatedRecipe = {
+            let imageKey =
+                oldRecipe.imageKey || "";
 
-            id: oldRecipe.id,
+            if (imageFile) {
 
-            title: name,
+                imageKey =
+                    await uploadImage(
+                        oldRecipe.recipeId,
+                        imageFile
+                    );
 
-            category: category,
+            }
 
-            ingredients: ingredients,
+            const updatedRecipe = {
 
-            instructions: instructions,
+                title: name,
 
-            favourite: false,
+                category: category,
 
-            image: oldRecipe.image || ""
+                ingredients: ingredients,
 
-        };
+                instructions: instructions,
 
+                imageKey: imageKey,
 
-        // ---------------------------------------------
-        // NEW IMAGE SELECTED
-        // ---------------------------------------------
+                createdAt:
+                    oldRecipe.createdAt || "",
 
-        if (imageFile) {
-
-            const reader =
-                new FileReader();
-
-
-            reader.onload = function () {
-
-                updatedRecipe.image =
-                    reader.result;
-
-
-                recipes[editingRecipeIndex] =
-                    updatedRecipe;
-
-
-                finishEditing();
+                updatedAt:
+                    new Date().toISOString()
 
             };
 
+            await updateRecipe(
+                oldRecipe.recipeId,
+                updatedRecipe
+            );
 
-            reader.readAsDataURL(imageFile);
+        } catch (error) {
 
-        } else {
+            console.error(
+                "Failed to update recipe:",
+                error
+            );
 
-            recipes[editingRecipeIndex] =
-                updatedRecipe;
-
-
-            finishEditing();
+            alert(
+                "Sorry, your recipe could not be updated."
+            );
 
         }
-
 
         return;
 
     }
 
 
-    // =================================================
-    // CREATE NEW RECIPE
-    // =================================================
-
     const newRecipe = {
-
-        id: Date.now(),
 
         title: name,
 
@@ -347,161 +331,233 @@ recipeForm.addEventListener("submit", function (event) {
 
         instructions: instructions,
 
-        favourite: false,
+        imageKey: "",
 
-        image: ""
+        createdAt:
+            new Date().toISOString(),
+
+        updatedAt:
+            new Date().toISOString()
 
     };
 
 
-    // =================================================
-    // NEW RECIPE IMAGE
-    // =================================================
+    try {
 
-    if (imageFile) {
+        const createdRecipe =
+            await createRecipe(newRecipe);
 
-        const reader =
-            new FileReader();
+        let finalRecipe =
+            createdRecipe;
 
+        if (imageFile) {
+            console.log("IMAGE FILE FOUND", imageFile);
+            const imageKey =
+                await uploadImage(
+                    createdRecipe.recipeId,
+                    imageFile
+                );
+            console.log("IMAGE UPLOADED", imageKey);    
 
-        reader.onload = function () {
+            finalRecipe =
+                await updateRecipeData(
+                    createdRecipe.recipeId,
+                    {
+                        ...createdRecipe,
+                        imageKey: imageKey,
+                        updatedAt:
+                            new Date().toISOString()
+                    }
+                );
 
-            newRecipe.image =
-                reader.result;
+        }
 
+        const recipeIndex =
+            recipes.findIndex(
+                recipe =>
+                    recipe.recipeId ===
+                    createdRecipe.recipeId
+            );
 
-            saveNewRecipe(newRecipe);
+        if (recipeIndex !== -1) {
+            recipes[recipeIndex] =
+                finalRecipe;
+        }
 
-        };
+        currentRecipeIndex =
+            recipes.findIndex(
+                recipe =>
+                    recipe.recipeId ===
+                    finalRecipe.recipeId
+            );
 
+        editingRecipeIndex = null;
 
-        reader.readAsDataURL(imageFile);
+        addDishScreen.style.display =
+            "none";
 
-    } else {
+        recipeForm.reset();
 
-        saveNewRecipe(newRecipe);
+        saveRecipeButton.textContent =
+            "Save to my cookbook ♡";
+
+        displayCurrentRecipe();
+
+    } catch (error) {
+
+        console.error(
+            "Failed to create recipe:",
+            error
+        );
+
+        alert(
+            "Sorry, your recipe could not be saved."
+        );
 
     }
 
 });
 
 
-// =====================================================
-// SAVE NEW RECIPE
-// =====================================================
+async function createRecipe(recipe) {
 
-function saveNewRecipe(recipe) {
+    const response =
+        await fetch(
+            `${API_URL}/recipes`,
+            {
+                method: "POST",
 
-    recipes.push(recipe);
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
 
+                body: JSON.stringify(recipe)
 
-    localStorage.setItem(
-        "sujiRecipes",
-        JSON.stringify(recipes)
-    );
+            }
+        );
 
+    if (!response.ok) {
+        throw new Error(
+            "Failed to create recipe"
+        );
+    }
 
-    currentRecipeIndex =
-        recipes.length - 1;
+    const createdRecipe =
+        await response.json();
 
+    recipes.push(createdRecipe);
 
-    editingRecipeIndex = null;
-
-
-    addDishScreen.style.display =
-        "none";
-
-
-    recipeForm.reset();
-
-
-    saveRecipeButton.textContent =
-        "Save to my cookbook ♡";
-
-
-    displayCurrentRecipe();
+    return createdRecipe;
 
 }
 
 
-// =====================================================
-// FINISH EDITING
-// =====================================================
+async function updateRecipeData(
+    recipeId,
+    recipe
+) {
 
-function finishEditing() {
+    const response =
+        await fetch(
+            `${API_URL}/recipes/${recipeId}`,
+            {
+                method: "PUT",
 
-    localStorage.setItem(
-        "sujiRecipes",
-        JSON.stringify(recipes)
-    );
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
 
+                body: JSON.stringify(recipe)
 
-    currentRecipeIndex =
-        editingRecipeIndex;
+            }
+        );
 
+    if (!response.ok) {
+        throw new Error(
+            "Failed to update recipe"
+        );
+    }
 
-    editingRecipeIndex = null;
-
-
-    addDishScreen.style.display =
-        "none";
-
-
-    recipeForm.reset();
-
-
-    saveRecipeButton.textContent =
-        "Save to my cookbook ♡";
-
-
-    displayCurrentRecipe();
+    return await response.json();
 
 }
 
 
-// =====================================================
-// SHOW CONTENTS
-// =====================================================
+async function updateRecipe(
+    recipeId,
+    recipe
+) {
+
+    try {
+
+        const updatedRecipe =
+            await updateRecipeData(
+                recipeId,
+                recipe
+            );
+
+        recipes[editingRecipeIndex] =
+            updatedRecipe;
+
+        currentRecipeIndex =
+            editingRecipeIndex;
+
+        editingRecipeIndex = null;
+
+        addDishScreen.style.display =
+            "none";
+
+        recipeForm.reset();
+
+        saveRecipeButton.textContent =
+            "Save to my cookbook ♡";
+
+        displayCurrentRecipe();
+
+    } catch (error) {
+
+        console.error(
+            "Failed to update recipe:",
+            error
+        );
+
+        alert(
+            "Sorry, your recipe could not be updated."
+        );
+
+    }
+
+}
+
 
 function showContents() {
 
     currentRecipeIndex = -1;
 
-
     indexPage.style.display =
         "flex";
-
 
     recipeDisplay.style.display =
         "none";
 
-
-
-
     closeBookButton.style.display =
         "block";
-
 
     recipePageNumber.textContent =
         "Contents";
 
-
     previousRecipeButton.disabled =
         true;
 
-
     nextRecipeButton.disabled =
         recipes.length === 0;
-
 
     renderRecipeIndex();
 
 }
 
-
-// =====================================================
-// RENDER CONTENTS
-// =====================================================
 
 function renderRecipeIndex() {
 
@@ -544,7 +600,6 @@ function renderRecipeIndex() {
                                 ${String(index + 1).padStart(2, "0")}
                             </span>
 
-
                             <span class="recipe-index-info">
 
                                 <strong>
@@ -557,13 +612,11 @@ function renderRecipeIndex() {
 
                             </span>
 
-
                             <span class="recipe-arrow">
                                 →
                             </span>
 
                         </button>
-
 
                         <button
                             class="delete-recipe-btn"
@@ -581,10 +634,6 @@ function renderRecipeIndex() {
             })
             .join("");
 
-
-    // =================================================
-    // OPEN RECIPE FROM CONTENTS
-    // =================================================
 
     document
         .querySelectorAll(".recipe-index-open")
@@ -605,10 +654,6 @@ function renderRecipeIndex() {
         });
 
 
-    // =================================================
-    // DELETE FROM CONTENTS
-    // =================================================
-
     document
         .querySelectorAll(".delete-recipe-btn")
         .forEach(button => {
@@ -620,7 +665,6 @@ function renderRecipeIndex() {
                     const index =
                         Number(this.dataset.index);
 
-
                     deleteRecipe(index);
 
                 }
@@ -631,15 +675,10 @@ function renderRecipeIndex() {
 }
 
 
-// =====================================================
-// DELETE RECIPE
-// =====================================================
-
-function deleteRecipe(index) {
+async function deleteRecipe(index) {
 
     const recipe =
         recipes[index];
-
 
     if (!recipe) {
         return;
@@ -657,47 +696,67 @@ function deleteRecipe(index) {
     }
 
 
-    recipes.splice(index, 1);
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/recipes/${recipe.recipeId}`,
+                {
+                    method: "DELETE"
+                }
+            );
 
 
-    localStorage.setItem(
-        "sujiRecipes",
-        JSON.stringify(recipes)
-    );
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to delete recipe"
+            );
+
+        }
 
 
+        recipes.splice(index, 1);
 
 
-    if (recipes.length === 0) {
+        if (recipes.length === 0) {
+
+            showContents();
+
+            return;
+
+        }
+
+
+        if (
+            currentRecipeIndex >=
+            recipes.length
+        ) {
+
+            currentRecipeIndex =
+                recipes.length - 1;
+
+        }
+
 
         showContents();
 
-        return;
+
+    } catch (error) {
+
+        console.error(
+            "Failed to delete recipe:",
+            error
+        );
+
+        alert(
+            "Sorry, the recipe could not be deleted."
+        );
 
     }
-
-
-
-
-    if (
-        currentRecipeIndex >=
-        recipes.length
-    ) {
-
-        currentRecipeIndex =
-            recipes.length - 1;
-
-    }
-
-
-    showContents();
 
 }
 
-
-// =====================================================
-// DISPLAY CURRENT RECIPE
-// =====================================================
 
 function displayCurrentRecipe() {
 
@@ -709,8 +768,6 @@ function displayCurrentRecipe() {
 
     }
 
-
-    
 
     if (
         currentRecipeIndex < 0 ||
@@ -727,12 +784,8 @@ function displayCurrentRecipe() {
     indexPage.style.display =
         "none";
 
-
     recipeDisplay.style.display =
         "block";
-
-
-
 
     closeBookButton.style.display =
         "none";
@@ -742,20 +795,16 @@ function displayCurrentRecipe() {
         recipes[currentRecipeIndex];
 
 
-    // =================================================
-    // IMAGE
-    // =================================================
-
     let imageHTML = "";
 
 
-    if (recipe.image) {
+    if (recipe.imageUrl) {
 
         imageHTML = `
 
             <img
                 class="recipe-image"
-                src="${recipe.image}"
+                src="${recipe.imageUrl}"
                 alt="${recipe.title}"
             >
 
@@ -764,32 +813,23 @@ function displayCurrentRecipe() {
     }
 
 
-    // =================================================
-    // RECIPE CONTENT
-    // =================================================
-
     recipeDisplay.innerHTML = `
 
         <span class="recipe-category">
             ${recipe.category}
         </span>
 
-
         <h3 class="recipe-title">
             ${recipe.title}
         </h3>
 
-
         ${imageHTML}
 
-
         <div class="recipe-divider"></div>
-
 
         <h4>
             Ingredients
         </h4>
-
 
         <ul class="recipe-ingredients">
 
@@ -803,11 +843,9 @@ function displayCurrentRecipe() {
 
         </ul>
 
-
         <h4>
             Instructions
         </h4>
-
 
         <ol class="recipe-instructions">
 
@@ -821,11 +859,6 @@ function displayCurrentRecipe() {
 
         </ol>
 
-
-        <!-- =========================================
-             RECIPE ACTIONS
-             ========================================= -->
-
         <div class="recipe-actions">
 
             <button
@@ -835,7 +868,6 @@ function displayCurrentRecipe() {
                 Edit Recipe ✎
             </button>
 
-
             <button
                 class="delete-current-recipe-btn"
                 type="button"
@@ -844,12 +876,6 @@ function displayCurrentRecipe() {
             </button>
 
         </div>
-
-
-        <!-- =========================================
-             CLOSE COOKBOOK
-             INSIDE SCROLLABLE RECIPE
-             ========================================= -->
 
         <div class="recipe-close-wrapper">
 
@@ -864,10 +890,6 @@ function displayCurrentRecipe() {
 
     `;
 
-
-    // =================================================
-    // EDIT BUTTON
-    // =================================================
 
     const editButton =
         recipeDisplay.querySelector(
@@ -885,10 +907,6 @@ function displayCurrentRecipe() {
     );
 
 
-    // =================================================
-    // DELETE BUTTON
-    // =================================================
-
     const deleteButton =
         recipeDisplay.querySelector(
             ".delete-current-recipe-btn"
@@ -904,10 +922,6 @@ function displayCurrentRecipe() {
         }
     );
 
-
-    // =================================================
-    // CLOSE BUTTON — RECIPE PAGE
-    // =================================================
 
     const recipeCloseButton =
         recipeDisplay.querySelector(
@@ -925,51 +939,27 @@ function displayCurrentRecipe() {
     );
 
 
-    // =================================================
-    // PAGE NUMBER
-    // =================================================
-
     recipePageNumber.textContent =
         `${currentRecipeIndex + 1} / ${recipes.length}`;
 
 
-    // =================================================
-    // PREVIOUS
-    // =================================================
-
     previousRecipeButton.disabled =
         false;
 
-
-    // =================================================
-    // NEXT
-    // =================================================
 
     nextRecipeButton.disabled =
         currentRecipeIndex ===
         recipes.length - 1;
 
 
-    // =================================================
-    // RESET RECIPE SCROLL
-    // =================================================
-
     recipeDisplay.scrollTop = 0;
 
 }
 
 
-// =====================================================
-// PREVIOUS BUTTON
-// =====================================================
-
 previousRecipeButton.addEventListener(
     "click",
     function () {
-
-        // ---------------------------------------------
-        // FIRST RECIPE → CONTENTS
-        // ---------------------------------------------
 
         if (currentRecipeIndex === 0) {
 
@@ -979,10 +969,6 @@ previousRecipeButton.addEventListener(
 
         }
 
-
-        // ---------------------------------------------
-        // OTHER RECIPES → PREVIOUS RECIPE
-        // ---------------------------------------------
 
         if (currentRecipeIndex > 0) {
 
@@ -996,17 +982,9 @@ previousRecipeButton.addEventListener(
 );
 
 
-// =====================================================
-// NEXT BUTTON
-// =====================================================
-
 nextRecipeButton.addEventListener(
     "click",
     function () {
-
-        // ---------------------------------------------
-        // CONTENTS → FIRST RECIPE
-        // ---------------------------------------------
 
         if (currentRecipeIndex === -1) {
 
@@ -1023,10 +1001,6 @@ nextRecipeButton.addEventListener(
         }
 
 
-        // ---------------------------------------------
-        // NEXT RECIPE
-        // ---------------------------------------------
-
         if (
             currentRecipeIndex <
             recipes.length - 1
@@ -1042,42 +1016,85 @@ nextRecipeButton.addEventListener(
 );
 
 
-// =====================================================
-// START APP
-// =====================================================
-
-showContents();
-
-/* =====================================================
-   RECIPE SEARCH
-   ===================================================== */
-
-const recipeSearch = document.querySelector("#recipe-search");
+const recipeSearch =
+    document.querySelector("#recipe-search");
 
 if (recipeSearch) {
 
-    recipeSearch.addEventListener("input", function () {
+    recipeSearch.addEventListener(
+        "input",
+        function () {
 
-        const searchTerm = this.value
-            .toLowerCase()
-            .trim();
+            const searchTerm =
+                this.value
+                    .toLowerCase()
+                    .trim();
 
-        const recipeItems =
-            document.querySelectorAll(".recipe-index-item");
+            const recipeItems =
+                document.querySelectorAll(
+                    ".recipe-index-item"
+                );
 
-        recipeItems.forEach(function (item) {
+            recipeItems.forEach(
+                function (item) {
 
-            const recipeText =
-                item.textContent.toLowerCase();
+                    const recipeText =
+                        item.textContent
+                            .toLowerCase();
 
-            if (recipeText.includes(searchTerm)) {
-                item.style.display = "";
-            } else {
-                item.style.display = "none";
-            }
+                    if (
+                        recipeText.includes(
+                            searchTerm
+                        )
+                    ) {
 
-        });
+                        item.style.display =
+                            "";
 
-    });
+                    } else {
+
+                        item.style.display =
+                            "none";
+
+                    }
+
+                }
+            );
+
+        }
+    );
 
 }
+
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener(
+        "load",
+        () => {
+
+            navigator.serviceWorker
+                .register("./service-worker.js")
+                .then(() => {
+
+                    console.log(
+                        "Service worker registered successfully."
+                    );
+
+                })
+                .catch(error => {
+
+                    console.error(
+                        "Service worker registration failed:",
+                        error
+                    );
+
+                });
+
+        }
+    );
+
+}
+
+
+loadRecipes();
