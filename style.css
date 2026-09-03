@@ -1,13 +1,3 @@
-/* =====================================================
-   SUJI'S RECIPE DIARY
-   FINAL COOKBOOK STYLING
-   ===================================================== */
-
-
-/* =====================================================
-   RESET
-   ===================================================== */
-
 * {
     margin: 0;
     padding: 0;
@@ -683,9 +673,7 @@ body {
 
 
 /* =====================================================
-   =====================================================
    RECIPE DISPLAY
-   =====================================================
    ===================================================== */
 
 .recipe-display {
@@ -1163,9 +1151,7 @@ body {
 
 
 /* =====================================================
-   =====================================================
    FRONT COVER
-   =====================================================
    ===================================================== */
 
 .book-cover {
@@ -1352,9 +1338,7 @@ body {
 
 
 /* =====================================================
-   =====================================================
    ADD DISH SCREEN
-   =====================================================
    ===================================================== */
 
 .add-dish-screen {
@@ -1730,4 +1714,167 @@ body {
         padding: 35px 25px;
     }
 
+}
+
+.recipe-search {
+    width: 100%;
+    margin: 16px 0 18px;
+}
+
+.recipe-search input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #d9a6ad;
+    border-radius: 20px;
+    background: #fffdf8;
+    color: #76535a;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.recipe-search input::placeholder {
+    color: #b58b91;
+}
+
+.recipe-search input:focus {
+    border-color: #ad6878;
+    box-shadow: 0 0 0 3px rgba(217, 166, 173, 0.18);
+}
+
+/* Recipe typography */
+
+.recipe-display h2 {
+    line-height: 1.2;
+    letter-spacing: 0.2px;
+}
+
+.recipe-display h3 {
+    line-height: 1.3;
+    margin-bottom: 8px;
+}
+
+.recipe-display p {
+    line-height: 1.6;
+}
+
+.recipe-display li {
+    line-height: 1.6;
+    margin-bottom: 5px;
+}
+
+
+/* Consistent buttons */
+
+.add-dish-btn,
+.open-book-btn,
+.close-book-btn,
+.recipe-navigation button,
+.edit-recipe-btn,
+.delete-current-recipe-btn,
+.recipe-close-book-btn,
+.save-recipe-btn {
+    font-family: Georgia, "Times New Roman", serif;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.add-dish-btn:hover,
+.open-book-btn:hover,
+.close-book-btn:hover,
+.recipe-navigation button:hover:not(:disabled),
+.edit-recipe-btn:hover,
+.delete-current-recipe-btn:hover,
+.recipe-close-book-btn:hover,
+.save-recipe-btn:hover {
+    background: #f7e1e5;
+}
+
+.add-dish-btn:hover,
+.open-book-btn:hover,
+.edit-recipe-btn:hover,
+.delete-current-recipe-btn:hover,
+.recipe-close-book-btn:hover,
+.save-recipe-btn:hover {
+    transform: translateY(-1px);
+}
+
+
+/* Subtle cookbook animations */
+
+.recipe-display {
+    animation: recipeFadeIn 0.25s ease;
+}
+
+.index-page {
+    animation: pageFadeIn 0.25s ease;
+}
+
+@keyframes recipeFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes pageFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+/* Empty cookbook state */
+
+.recipe-index-list:empty {
+    min-height: 80px;
+}
+
+
+/* Final spacing */
+
+.index-subtitle {
+    line-height: 1.5;
+}
+
+.page-message {
+    line-height: 1.6;
+}
+
+.page-note {
+    line-height: 1.5;
+}
+
+
+/* Mobile polish */
+
+@media (max-width: 700px) {
+    .recipe-display h2 {
+        line-height: 1.2;
+    }
+
+    .recipe-display h3 {
+        line-height: 1.3;
+    }
+
+    .recipe-display p,
+    .recipe-display li {
+        line-height: 1.5;
+    }
+
+    .recipe-navigation button {
+        min-width: 90px;
+    }
+
+    .recipe-search input {
+        font-size: 13px;
+    }
 }

@@ -1,12 +1,3 @@
-// =====================================================
-// SUJI'S RECIPE DIARY
-// =====================================================
-
-
-// =====================================================
-// ELEMENTS
-// =====================================================
-
 const openBookButton =
     document.querySelector(".open-book-btn");
 
@@ -202,8 +193,7 @@ function editRecipe(index) {
         (recipe.instructions || []).join("\n");
 
 
-    // File inputs cannot be pre-filled.
-    // Existing image is kept unless a new one is selected.
+
 
     recipeImageInput.value = "";
 
@@ -486,7 +476,7 @@ function showContents() {
         "none";
 
 
-    // Show the original Contents close button
+
 
     closeBookButton.style.display =
         "block";
@@ -676,7 +666,7 @@ function deleteRecipe(index) {
     );
 
 
-    // If there are no recipes left
+
 
     if (recipes.length === 0) {
 
@@ -687,7 +677,7 @@ function deleteRecipe(index) {
     }
 
 
-    // Keep current index valid
+
 
     if (
         currentRecipeIndex >=
@@ -720,7 +710,7 @@ function displayCurrentRecipe() {
     }
 
 
-    // Invalid page = Contents
+    
 
     if (
         currentRecipeIndex < 0 ||
@@ -742,9 +732,7 @@ function displayCurrentRecipe() {
         "block";
 
 
-    // Hide the Contents-page close button.
-    // The recipe gets its own close button
-    // inside the scrollable area.
+
 
     closeBookButton.style.display =
         "none";
