@@ -1,0 +1,62 @@
+2026-09-09 17:20:09,589 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
+2026-09-09 17:20:09,607 INFO o.a.j.JMeter: Loading user properties from: /opt/jmeter/bin/user.properties
+2026-09-09 17:20:09,608 INFO o.a.j.JMeter: Loading system properties from: /opt/jmeter/bin/system.properties
+2026-09-09 17:20:09,614 INFO o.a.j.JMeter: Copyright (c) 1998-2024 The Apache Software Foundation
+2026-09-09 17:20:09,614 INFO o.a.j.JMeter: Version 5.6.3
+2026-09-09 17:20:09,614 INFO o.a.j.JMeter: java.version=21.0.12
+2026-09-09 17:20:09,614 INFO o.a.j.JMeter: java.vm.name=OpenJDK 64-Bit Server VM
+2026-09-09 17:20:09,614 INFO o.a.j.JMeter: os.name=Linux
+2026-09-09 17:20:09,614 INFO o.a.j.JMeter: os.arch=amd64
+2026-09-09 17:20:09,614 INFO o.a.j.JMeter: os.version=6.6.87.2-microsoft-standard-WSL2
+2026-09-09 17:20:09,615 INFO o.a.j.JMeter: file.encoding=UTF-8
+2026-09-09 17:20:09,615 INFO o.a.j.JMeter: java.awt.headless=true
+2026-09-09 17:20:09,615 INFO o.a.j.JMeter: Max memory     =1073741824
+2026-09-09 17:20:09,615 INFO o.a.j.JMeter: Available Processors =12
+2026-09-09 17:20:09,625 INFO o.a.j.JMeter: Default Locale=English (EN)
+2026-09-09 17:20:09,626 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
+2026-09-09 17:20:09,626 INFO o.a.j.JMeter: JMeterHome=/opt/jmeter
+2026-09-09 17:20:09,626 INFO o.a.j.JMeter: user.dir  =/home/suji/recipe-diary/results
+2026-09-09 17:20:09,626 INFO o.a.j.JMeter: PWD       =/home/suji/recipe-diary/results
+2026-09-09 17:20:09,626 INFO o.a.j.JMeter: IP: 127.0.1.1 Name: Sujithaa FullName: Sujithaa.localdomain
+2026-09-09 17:20:09,639 INFO o.a.j.s.FileServer: Default base='/home/suji/recipe-diary/results'
+2026-09-09 17:20:09,640 INFO o.a.j.s.FileServer: Set new base='/home/suji/recipe-diary/results/results/jmeter'
+2026-09-09 17:20:09,832 INFO o.a.j.s.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2
+2026-09-09 17:20:09,857 INFO o.a.j.s.SaveService: Using SaveService properties version 5.0
+2026-09-09 17:20:09,859 INFO o.a.j.s.SaveService: Using SaveService properties file encoding UTF-8
+2026-09-09 17:20:09,863 INFO o.a.j.s.SaveService: Loading file: results/jmeter/post-benchmark.jmx
+2026-09-09 17:20:09,907 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/html is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-09-09 17:20:09,907 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xhtml+xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-09-09 17:20:09,907 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-09-09 17:20:09,907 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-09-09 17:20:09,907 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/vnd.wap.wml is org.apache.jmeter.protocol.http.parser.RegexpHTMLParser
+2026-09-09 17:20:09,907 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/css is org.apache.jmeter.protocol.http.parser.CssParser
+2026-09-09 17:20:09,926 INFO o.a.j.JMeter: Creating summariser <summary>
+2026-09-09 17:20:09,940 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2026-09-09 17:20:09,941 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2026-09-09 17:20:09,941 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2026-09-09 17:20:09,945 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must contain the string: '.functions.'
+2026-09-09 17:20:09,945 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must not contain the string: '.gui.'
+2026-09-09 17:20:10,001 INFO o.a.j.JMeter: Running test (1788970810001)
+2026-09-09 17:20:10,024 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : POST Recipes
+2026-09-09 17:20:10,024 INFO o.a.j.e.StandardJMeterEngine: Starting 1 threads for group POST Recipes.
+2026-09-09 17:20:10,024 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2026-09-09 17:20:10,024 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=1 ramp-up=1 delayedStart=false
+2026-09-09 17:20:10,028 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2026-09-09 17:20:10,029 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2026-09-09 17:20:10,030 INFO o.a.j.t.JMeterThread: Thread started: POST Recipes 1-1
+2026-09-09 17:20:10,043 INFO o.a.j.p.h.s.HTTPHCAbstractImpl: Local host = Sujithaa
+2026-09-09 17:20:10,047 INFO o.a.j.p.h.s.HTTPHC4Impl: HTTP request retry count = 0
+2026-09-09 17:20:10,048 INFO o.a.j.s.SampleResult: Note: Sample TimeStamps are START times
+2026-09-09 17:20:10,048 INFO o.a.j.s.SampleResult: sampleresult.default.encoding is set to UTF-8
+2026-09-09 17:20:10,048 INFO o.a.j.s.SampleResult: sampleresult.useNanoTime=true
+2026-09-09 17:20:10,048 INFO o.a.j.s.SampleResult: sampleresult.nanoThreadSleep=5000
+2026-09-09 17:20:10,169 INFO o.a.j.p.h.s.h.LazyLayeredConnectionSocketFactory: Setting up HTTPS TrustAll Socket Factory
+2026-09-09 17:20:10,178 INFO o.a.j.u.JsseSSLManager: Using default SSL protocol: TLS
+2026-09-09 17:20:10,178 INFO o.a.j.u.JsseSSLManager: SSL session context: per-thread
+2026-09-09 17:20:10,243 INFO o.a.j.u.SSLManager: JmeterKeyStore Location:  type JKS
+2026-09-09 17:20:10,245 INFO o.a.j.u.SSLManager: KeyStore created OK
+2026-09-09 17:20:10,245 WARN o.a.j.u.SSLManager: Keystore file not found, loading empty keystore
+2026-09-09 17:20:11,785 INFO o.a.j.t.JMeterThread: Thread is done: POST Recipes 1-1
+2026-09-09 17:20:11,785 INFO o.a.j.t.JMeterThread: Thread finished: POST Recipes 1-1
+2026-09-09 17:20:11,789 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2026-09-09 17:20:11,791 INFO o.a.j.r.Summariser: summary =     10 in 00:00:02 =    5.6/s Avg:   166 Min:    48 Max:   764 Err:     0 (0.00%)

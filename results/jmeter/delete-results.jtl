@@ -1,0 +1,2 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,grpThreads,allThreads,URL,Latency,Connect
+1788971804482,713,DELETE /recipes/{recipeId},200,OK,DELETE Recipe 1-1,text,true,1,1,https://qu0fkg2jii.execute-api.eu-west-2.amazonaws.com/recipes/b62fc860-d79e-4f38-a398-7eef6b194f0e,709,341

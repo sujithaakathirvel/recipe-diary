@@ -1,0 +1,20 @@
+Recipe Diary — S3 Security Validation
+Date: 2026-09-09
+Region: eu-west-2
+Bucket: my-recipe-diary-images
+
+Public Access Block
+BlockPublicAcls: true
+IgnorePublicAcls: true
+BlockPublicPolicy: true
+RestrictPublicBuckets: true
+
+Public object access test
+Unsigned S3 object request: HTTP 403
+
+Presigned application access test
+Presigned image retrieval: HTTP 200
+
+Validation result
+S3 objects are not publicly accessible.
+Application access is provided through presigned URLs.

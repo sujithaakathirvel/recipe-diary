@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+
+    <TestPlan guiclass="TestPlanGui"
+              testclass="TestPlan"
+              testname="Recipe Diary PUT Benchmark"
+              enabled="true">
+      <stringProp name="TestPlan.comments">Serverless API PUT performance benchmark</stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments"/>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+
+    <hashTree>
+
+      <ThreadGroup guiclass="ThreadGroupGui"
+                   testclass="ThreadGroup"
+                   testname="PUT Recipe"
+                   enabled="true">
+
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+
+        <elementProp name="ThreadGroup.main_controller"
+                     elementType="LoopController">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">10</stringProp>
+        </elementProp>
+
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <longProp name="ThreadGroup.start_time">0</longProp>
+        <longProp name="ThreadGroup.end_time">0</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+
+      </ThreadGroup>
+
+      <hashTree>
+
+        <HeaderManager guiclass="HeaderPanel"
+                       testclass="HeaderManager"
+                       testname="JSON Content-Type"
+                       enabled="true">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Content-Type</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+          </collectionProp>
+        </HeaderManager>
+
+        <hashTree/>
+
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui"
+                          testclass="HTTPSamplerProxy"
+                          testname="PUT /recipes/{recipeId}"
+                          enabled="true">
+
+          <elementProp name="HTTPsampler.Arguments"
+                       elementType="Arguments">
+
+            <collectionProp name="Arguments.arguments">
+
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{"title":"JMeter PUT Benchmark Updated","category":"Benchmark","ingredients":["Updated ingredient"],"instructions":["Updated instruction"],"imageKey":"","createdAt":"2026-09-09T17:00:00Z","updatedAt":"2026-09-09T17:30:00Z"}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+
+            </collectionProp>
+
+          </elementProp>
+
+          <stringProp name="HTTPSampler.domain">qu0fkg2jii.execute-api.eu-west-2.amazonaws.com</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/recipes/b62fc860-d79e-4f38-a398-7eef6b194f0e</stringProp>
+          <stringProp name="HTTPSampler.method">PUT</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+
+        </HTTPSamplerProxy>
+
+        <hashTree/>
+
+        <ResultCollector guiclass="SimpleDataWriter"
+                          testclass="ResultCollector"
+                          testname="PUT Results"
+                          enabled="true">
+
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+
+          <objProp>
+            <name>saveConfig</name>
+
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>true</responseData>
+              <samplerData>true</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <connectTime>true</connectTime>
+            </value>
+
+          </objProp>
+
+          <stringProp name="filename">results/jmeter/put-results.jtl</stringProp>
+
+        </ResultCollector>
+
+        <hashTree/>
+
+      </hashTree>
+
+    </hashTree>
+
+  </hashTree>
+</jmeterTestPlan>

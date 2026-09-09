@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+
+    <TestPlan guiclass="TestPlanGui"
+              testclass="TestPlan"
+              testname="Recipe Diary DELETE Benchmark"
+              enabled="true">
+      <stringProp name="TestPlan.comments">Serverless API DELETE performance benchmark</stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments"/>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+
+    <hashTree>
+
+      <ThreadGroup guiclass="ThreadGroupGui"
+                   testclass="ThreadGroup"
+                   testname="DELETE Recipe"
+                   enabled="true">
+
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+
+        <elementProp name="ThreadGroup.main_controller"
+                     elementType="LoopController">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <longProp name="ThreadGroup.start_time">0</longProp>
+        <longProp name="ThreadGroup.end_time">0</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+
+      </ThreadGroup>
+
+      <hashTree>
+
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui"
+                          testclass="HTTPSamplerProxy"
+                          testname="DELETE /recipes/{recipeId}"
+                          enabled="true">
+
+          <elementProp name="HTTPsampler.Arguments"
+                       elementType="Arguments"/>
+
+          <stringProp name="HTTPSampler.domain">qu0fkg2jii.execute-api.eu-west-2.amazonaws.com</stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/recipes/b62fc860-d79e-4f38-a398-7eef6b194f0e</stringProp>
+          <stringProp name="HTTPSampler.method">DELETE</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+
+        </HTTPSamplerProxy>
+
+        <hashTree/>
+
+        <ResultCollector guiclass="SimpleDataWriter"
+                          testclass="ResultCollector"
+                          testname="DELETE Results"
+                          enabled="true">
+
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+
+          <objProp>
+            <name>saveConfig</name>
+
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>true</responseData>
+              <samplerData>true</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <connectTime>true</connectTime>
+            </value>
+
+          </objProp>
+
+          <stringProp name="filename">results/jmeter/delete-results.jtl</stringProp>
+
+        </ResultCollector>
+
+        <hashTree/>
+
+      </hashTree>
+
+    </hashTree>
+
+  </hashTree>
+</jmeterTestPlan>

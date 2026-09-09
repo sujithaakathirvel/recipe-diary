@@ -1,0 +1,19 @@
+Recipe Diary — Lambda Performance Evidence
+Date: 2026-09-09
+Function: recipe-diary-api
+Region: eu-west-2
+Metric window: 2026-09-09 16:30–17:30 UTC
+
+Duration
+Average: 69.0059375 ms
+Minimum: 2.63 ms
+Maximum: 329.26 ms
+
+Invocations
+Sum: 32
+
+Errors
+Sum: 0
+
+Throttles
+Sum: 0

@@ -1,0 +1,28 @@
+Recipe Diary — Image Performance Benchmark
+Date: 2026-09-09
+Region: eu-west-2
+
+Upload benchmark
+Size      HTTP   Time
+100 KB    200    0.157950 s
+500 KB    200    0.432605 s
+1 MB      200    0.170542 s
+2 MB      200    0.421630 s
+5 MB      200    0.510494 s
+
+Retrieval benchmark
+Size      HTTP   Time
+100 KB    200    0.121114 s
+500 KB    200    0.166549 s
+1 MB      200    0.218239 s
+2 MB      200    0.304727 s
+5 MB      200    0.354543 s
+
+Upload success rate: 5/5 (100%)
+Retrieval success rate: 5/5 (100%)
+
+Note:
+The initial 100 KB retrieval attempt was invalid because the benchmark
+recipe still referenced the 5 MB object. It was excluded from the results.
+The 100 KB measurement above was captured after associating the correct
+100 KB S3 object with the benchmark recipe.
